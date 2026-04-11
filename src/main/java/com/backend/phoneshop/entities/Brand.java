@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
 @Table(name = "brands")
+@SQLRestriction("deleted_at IS NULL")
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

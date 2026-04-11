@@ -28,8 +28,14 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public BrandDto update(Long id, BrandDto brandDto) {
-        BrandDto oldBrand = findById(id);
-        oldBrand.setName(brandDto.getName());
-        return BrandMapper.INSTANCE.toDto(repository.save(BrandMapper.INSTANCE.toEntity(oldBrand)));
+        return BrandMapper.INSTANCE
+                .toDto(repository.save(BrandMapper.INSTANCE
+                        .mergeDto(brandDto, repository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Brand", id)))));
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.delete(repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id)));
     }
 }

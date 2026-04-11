@@ -27,4 +27,10 @@ public class BrandController {
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody BrandDto brandDto) {
         return ResponseEntity.ok(service.update(id,brandDto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Brand %s has been deleted.".formatted(id));
+    }
 }
