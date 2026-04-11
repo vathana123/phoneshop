@@ -5,18 +5,21 @@ import com.backend.phoneshop.mapper.BrandMapper;
 import com.backend.phoneshop.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("brands")
 public class BrandController {
     private final BrandService service;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody BrandDto brandDto) {
-        return ResponseEntity.ok(BrandMapper.toBrandDto(service.save(BrandMapper.toBrand(brandDto))));
+        return ResponseEntity.ok(service.save(brandDto));
     }
 }
