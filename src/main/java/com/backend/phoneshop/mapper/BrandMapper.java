@@ -11,8 +11,6 @@ public class BrandMapper {
     }
 
     public static BrandDto toBrandDto(Brand brand) {
-        BrandDto dto = new BrandDto();
-        brand.setName(dto.getName());
-        return dto;
+        return BrandDto.builder().id(brand.getId()).name(brand.getName()).build();
     }
 }
