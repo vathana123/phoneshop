@@ -18,18 +18,18 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public BrandDto findById(Long id) {
-        return BrandMapper.toBrandDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id)));
+        return BrandMapper.INSTANCE.toDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id)));
     }
 
     @Override
     public BrandDto save(BrandDto brandDto) {
-        return BrandMapper.toBrandDto(repository.save(BrandMapper.toBrand(brandDto)));
+        return BrandMapper.INSTANCE.toDto(repository.save(BrandMapper.INSTANCE.toEntity(brandDto)));
     }
 
     @Override
     public BrandDto update(Long id, BrandDto brandDto) {
         BrandDto oldBrand = findById(id);
         oldBrand.setName(brandDto.getName());
-        return BrandMapper.toBrandDto(repository.save(BrandMapper.toBrand(brandDto)));
+        return BrandMapper.INSTANCE.toDto(repository.save(BrandMapper.INSTANCE.toEntity(oldBrand)));
     }
 }

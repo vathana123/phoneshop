@@ -22,4 +22,9 @@ public class BrandController {
     public ResponseEntity<?> save(@RequestBody BrandDto brandDto) {
         return ResponseEntity.ok(service.save(brandDto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody BrandDto brandDto) {
+        return ResponseEntity.ok(service.update(id,brandDto));
+    }
 }
