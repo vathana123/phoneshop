@@ -8,11 +8,13 @@ import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class) // ✅ ADD THIS
 @SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
 @Table(name = "brands")
 @SQLRestriction("deleted_at IS NULL")

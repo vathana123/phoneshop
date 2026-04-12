@@ -1,9 +1,9 @@
 package com.backend.phoneshop.controller;
 
 import com.backend.phoneshop.dto.BrandDto;
-import com.backend.phoneshop.mapper.BrandMapper;
 import com.backend.phoneshop.service.BrandService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("brands")
 public class BrandController {
     private final BrandService service;
+
+    @GetMapping
+    public ResponseEntity<?> getAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.findAll(search, pageable));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
