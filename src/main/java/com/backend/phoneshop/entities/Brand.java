@@ -1,8 +1,10 @@
 package com.backend.phoneshop.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.Where;
@@ -18,6 +20,9 @@ import java.time.LocalDateTime;
 @SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
 @Table(name = "brands")
 @SQLRestriction("deleted_at IS NULL")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

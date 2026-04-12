@@ -29,7 +29,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public BrandDto findById(Long id) {
         return brandMapper
-                .toDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id)));
+                .toDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException(Brand.class, id)));
     }
 
     @Override
@@ -42,11 +42,11 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper
                 .toDto(repository.save(brandMapper
                         .mergeDto(brandDto, repository.findById(id)
-                                .orElseThrow(() -> new ResourceNotFoundException("Brand", id)))));
+                                .orElseThrow(() -> new ResourceNotFoundException(Brand.class, id)))));
     }
 
     @Override
     public void delete(Long id) {
-        repository.delete(repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id)));
+        repository.delete(repository.findById(id).orElseThrow(()->new ResourceNotFoundException(Brand.class, id)));
     }
 }

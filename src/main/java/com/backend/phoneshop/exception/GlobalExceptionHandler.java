@@ -1,5 +1,6 @@
 package com.backend.phoneshop.exception;
 
+import com.backend.phoneshop.dto.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
