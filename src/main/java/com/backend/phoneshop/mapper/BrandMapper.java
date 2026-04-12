@@ -1,7 +1,7 @@
 package com.backend.phoneshop.mapper;
 
 import com.backend.phoneshop.dto.BrandDto;
-import com.backend.phoneshop.entities.Brand;
+import com.backend.phoneshop.entity.Brand;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

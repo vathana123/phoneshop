@@ -1,7 +1,7 @@
 package com.backend.phoneshop.mapper;
 
 import com.backend.phoneshop.dto.CategoryTypeDto;
-import com.backend.phoneshop.entities.CategoryType;
+import com.backend.phoneshop.entity.CategoryType;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

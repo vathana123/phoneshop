@@ -1,4 +1,4 @@
-package com.backend.phoneshop.entities;
+package com.backend.phoneshop.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,15 +18,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EntityListeners(AuditingEntityListener.class) // ✅ ADD THIS
-@SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
+@EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE categories SET deleted_at = NOW() WHERE id = ?")
 @SQLRestriction("deleted_at IS NULL")
-@Table(name = "category_types")
-public class CategoryType {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_type_id")
+    private CategoryType categoryType;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -38,8 +46,4 @@ public class CategoryType {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    public boolean isDeleted() {
-        return deletedAt != null;
-    }
 }

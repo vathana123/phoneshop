@@ -2,7 +2,7 @@ package com.backend.phoneshop.impl;
 
 import com.backend.phoneshop.dto.CategoryTypeDto;
 import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.entities.CategoryType;
+import com.backend.phoneshop.entity.CategoryType;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.mapper.CategoryTypeMapper;
 import com.backend.phoneshop.mapper.PageResponseMapper;
@@ -33,15 +33,15 @@ public class CategoryTypeServiceImpl implements CategoryTypeService {
     }
 
     @Override
-    public CategoryTypeDto save(CategoryTypeDto brandDto) {
-        return mapper.toDto(repository.save(mapper.toEntity(brandDto)));
+    public CategoryTypeDto save(CategoryTypeDto dto) {
+        return mapper.toDto(repository.save(mapper.toEntity(dto)));
     }
 
     @Override
-    public CategoryTypeDto update(Long id, CategoryTypeDto brandDto) {
+    public CategoryTypeDto update(Long id, CategoryTypeDto dto) {
         return mapper
                 .toDto(repository.save(mapper
-                        .mergeDto(brandDto, repository.findById(id)
+                        .mergeDto(dto, repository.findById(id)
                                 .orElseThrow(() -> new ResourceNotFoundException(CategoryType.class, id)))));
     }
 

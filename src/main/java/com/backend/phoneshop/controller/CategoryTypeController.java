@@ -40,6 +40,6 @@ public class CategoryTypeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.ok("Brand %s has been deleted.".formatted(id));
+        return ResponseEntity.ok("Category %s has been deleted.".formatted(id));
     }
 }

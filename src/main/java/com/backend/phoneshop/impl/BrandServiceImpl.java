@@ -2,7 +2,7 @@ package com.backend.phoneshop.impl;
 
 import com.backend.phoneshop.dto.BrandDto;
 import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.entities.Brand;
+import com.backend.phoneshop.entity.Brand;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.mapper.BrandMapper;
 import com.backend.phoneshop.mapper.PageResponseMapper;
@@ -33,15 +33,15 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BrandDto save(BrandDto brandDto) {
-        return mapper.toDto(repository.save(mapper.toEntity(brandDto)));
+    public BrandDto save(BrandDto dto) {
+        return mapper.toDto(repository.save(mapper.toEntity(dto)));
     }
 
     @Override
-    public BrandDto update(Long id, BrandDto brandDto) {
+    public BrandDto update(Long id, BrandDto dto) {
         return mapper
                 .toDto(repository.save(mapper
-                        .mergeDto(brandDto, repository.findById(id)
+                        .mergeDto(dto, repository.findById(id)
                                 .orElseThrow(() -> new ResourceNotFoundException(Brand.class, id)))));
     }
 

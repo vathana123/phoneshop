@@ -2,7 +2,7 @@ package com.backend.phoneshop.service;
 
 import com.backend.phoneshop.dto.BrandDto;
 import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.entities.Brand;
+import com.backend.phoneshop.entity.Brand;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.repository.BrandRepository;
 import org.junit.jupiter.api.Test;
