@@ -3,11 +3,13 @@ package com.backend.phoneshop.exception;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@Builder
-@RequiredArgsConstructor
+@Getter
 public class ApiException extends RuntimeException {
+
     private final HttpStatus status;
-    private final String message;
+
+    public ApiException(HttpStatus status, String message) {
+        super(message); // 🔥 IMPORTANT
+        this.status = status;
+    }
 }

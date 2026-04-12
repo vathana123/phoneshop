@@ -3,7 +3,7 @@ package com.backend.phoneshop.dto;
 import lombok.Builder;
 
 @Builder
-public record BrandDto (
+public record CategoryTypeDto(
     Long id,
     String name
-){}
+) {}

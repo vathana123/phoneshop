@@ -1,0 +1,26 @@
+package com.backend.phoneshop.mapper;
+
+import com.backend.phoneshop.dto.PageResponse;
+import org.springframework.data.domain.Page;
+
+import java.util.function.Function;
+
+public class PageResponseMapper {
+
+    public static <T, D> PageResponse<D> toPageResponse(Page<T> page, Function<T, D> mapper) {
+        return new PageResponse<>(
+                page.getContent()
+                        .stream()
+                        .map(mapper)
+                        .toList(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.hasNext(),
+                page.hasPrevious(),
+                page.isFirst(),
+                page.isLast()
+        );
+    }
+}
