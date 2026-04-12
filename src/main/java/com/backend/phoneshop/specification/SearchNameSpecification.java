@@ -1,6 +1,5 @@
 package com.backend.phoneshop.specification;
 
-import com.backend.phoneshop.entities.Brand;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,12 +13,12 @@ import java.util.List;
 
 @Data
 @Builder
-public class BrandSpecification implements Specification<Brand> {
+public class SearchNameSpecification<T> implements Specification<T> {
 
     private String search;
 
     @Override
-    public Predicate toPredicate(Root<Brand> root,
+    public Predicate toPredicate(Root<T> root,
                                  CriteriaQuery<?> query,
                                  CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();

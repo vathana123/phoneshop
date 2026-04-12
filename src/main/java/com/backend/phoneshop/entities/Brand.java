@@ -15,14 +15,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@EntityListeners(AuditingEntityListener.class) // ✅ ADD THIS
-@SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
-@Table(name = "brands")
-@SQLRestriction("deleted_at IS NULL")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@EntityListeners(AuditingEntityListener.class) // ✅ ADD THIS
+@SQLDelete(sql = "UPDATE brands SET deleted_at = NOW() WHERE id = ?")
+@SQLRestriction("deleted_at IS NULL")
+@Table(name = "brands")
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

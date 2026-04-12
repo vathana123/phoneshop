@@ -1,10 +1,10 @@
 package com.backend.phoneshop.service;
 
-import com.backend.phoneshop.dto.BrandDto;
+import com.backend.phoneshop.dto.CategoryTypeDto;
 import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.entities.Brand;
+import com.backend.phoneshop.entities.CategoryType;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
-import com.backend.phoneshop.repository.BrandRepository;
+import com.backend.phoneshop.repository.CategoryTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,37 +19,37 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-class BrandServiceTest {
+public class CategoryTypeServiceTest {
 
     @Autowired
-    private BrandService service;
+    private CategoryTypeService service;
 
     @Autowired
-    private BrandRepository repository;
+    private CategoryTypeRepository repository;
 
     @Test
-    void shouldSaveBrand() {
+    void shouldSaveCategoryType() {
         // Arrange
-        BrandDto dto = BrandDto.builder().name("Apple").build();
+        CategoryTypeDto dto = CategoryTypeDto.builder().name("Smart Phone").build();
 
         // Act
-        BrandDto result = service.save(dto);
+        CategoryTypeDto result = service.save(dto);
 
         // Assert
         assertThat(result.id()).isNotNull();
-        assertThat(result.name()).isEqualTo("Apple");
+        assertThat(result.name()).isEqualTo("Smart Phone");
     }
 
     @Test
     void shouldFindById() {
         // Arrange
-        Brand brand = repository.save(Brand.builder().name("Samsung").build());
+        CategoryType brand = repository.save(CategoryType.builder().name("Charger").build());
 
         // Act
-        BrandDto result = service.findById(brand.getId());
+        CategoryTypeDto result = service.findById(brand.getId());
 
         // Assert
-        assertThat(result.name()).isEqualTo("Samsung");
+        assertThat(result.name()).isEqualTo("Charger");
     }
 
     @Test
@@ -60,23 +60,23 @@ class BrandServiceTest {
     }
 
     @Test
-    void shouldUpdateBrand() {
+    void shouldUpdateCategoryType() {
         // Arrange
-        Brand brand = repository.save(Brand.builder().name("Old").build());
+        CategoryType brand = repository.save(CategoryType.builder().name("Old").build());
 
-        BrandDto updateDto = BrandDto.builder().name("New").build();
+        CategoryTypeDto updateDto = CategoryTypeDto.builder().name("New").build();
 
         // Act
-        BrandDto updated = service.update(brand.getId(), updateDto);
+        CategoryTypeDto updated = service.update(brand.getId(), updateDto);
 
         // Assert
         assertThat(updated.name()).isEqualTo("New");
     }
 
     @Test
-    void shouldDeleteBrand() {
+    void shouldDeleteCategoryType() {
         // Arrange
-        Brand brand = repository.save(Brand.builder().name("DeleteMe").build());
+        CategoryType brand = repository.save(CategoryType.builder().name("DeleteMe").build());
 
         // Act
         service.delete(brand.getId());
@@ -88,14 +88,14 @@ class BrandServiceTest {
     @Test
     void shouldReturnPagedResult() {
         // Arrange
-        repository.save(Brand.builder().name("Apple").build());
-        repository.save(Brand.builder().name("Samsung").build());
-        repository.save(Brand.builder().name("Xiaomi").build());
+        repository.save(CategoryType.builder().name("Smart Phone").build());
+        repository.save(CategoryType.builder().name("Tablet").build());
+        repository.save(CategoryType.builder().name("Cell Phone").build());
 
         Pageable pageable = PageRequest.of(0, 2);
 
         // Act
-        PageResponse<BrandDto> response = service.findAll(null, pageable);
+        PageResponse<CategoryTypeDto> response = service.findAll(null, pageable);
 
         // Assert
         assertThat(response.content()).hasSize(2);
