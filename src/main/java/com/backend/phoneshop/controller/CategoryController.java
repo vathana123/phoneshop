@@ -9,38 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("categories")
-public class CategoryController {
-    private final CategoryService service;
-
-    @GetMapping
-    public ResponseEntity<?> getAll(
-            @RequestParam(required = false) Map<String, Object> filters,
-            Pageable pageable
-    ) {
-        return ResponseEntity.ok(service.findAll(filters, pageable));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody CategoryDto dto) {
-        return ResponseEntity.ok(service.save(dto));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDto dto) {
-        return ResponseEntity.ok(service.update(id, dto));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.ok("Category %s has been deleted.".formatted(id));
+public class CategoryController extends BaseController<CategoryService, CategoryDto, Long>{
+    public CategoryController(CategoryService service) {
+        super(service, "Category");
     }
 }

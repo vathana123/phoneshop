@@ -6,10 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface BrandService {
-    PageResponse<BrandDto> findAll(String search, Pageable pageable);
-    BrandDto findById(Long id);
-    BrandDto save(BrandDto dto);
-    BrandDto update(Long id, BrandDto dto);
-    void delete(Long id);
+public interface BrandService extends BaseService<BrandDto, Long>{
 }

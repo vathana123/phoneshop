@@ -8,11 +8,14 @@ import com.backend.phoneshop.mapper.BrandMapper;
 import com.backend.phoneshop.mapper.PageResponseMapper;
 import com.backend.phoneshop.repository.BrandRepository;
 import com.backend.phoneshop.service.BrandService;
-import com.backend.phoneshop.specification.SearchNameSpecification;
+import com.backend.phoneshop.specification.SearchFilterSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,8 @@ public class BrandServiceImpl implements BrandService {
     private final BrandMapper mapper;
 
     @Override
-    public PageResponse<BrandDto> findAll(String search, Pageable pageable) {
-        Page<Brand> page = repository.findAll(SearchNameSpecification.<Brand>builder().search(search).build(), pageable);
+    public PageResponse<BrandDto> findAll(Map<String, Object> filters, Pageable pageable) {
+        Page<Brand> page = repository.findAll(SearchFilterSpecification.<Brand>builder().filters(filters).fields(List.of("name")).build(), pageable);
         return PageResponseMapper.toPageResponse(page, mapper::toDto);
     }
 

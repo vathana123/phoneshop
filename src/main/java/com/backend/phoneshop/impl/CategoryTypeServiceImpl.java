@@ -8,11 +8,14 @@ import com.backend.phoneshop.mapper.CategoryTypeMapper;
 import com.backend.phoneshop.mapper.PageResponseMapper;
 import com.backend.phoneshop.repository.CategoryTypeRepository;
 import com.backend.phoneshop.service.CategoryTypeService;
-import com.backend.phoneshop.specification.SearchNameSpecification;
+import com.backend.phoneshop.specification.SearchFilterSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,8 @@ public class CategoryTypeServiceImpl implements CategoryTypeService {
     private final CategoryTypeMapper mapper;
 
     @Override
-    public PageResponse<CategoryTypeDto> findAll(String search, Pageable pageable) {
-        Page<CategoryType> page = repository.findAll(SearchNameSpecification.<CategoryType>builder().search(search).build(), pageable);
+    public PageResponse<CategoryTypeDto> findAll(Map<String, Object> filters, Pageable pageable) {
+        Page<CategoryType> page = repository.findAll(SearchFilterSpecification.<CategoryType>builder().filters(filters).fields(List.of("name")).build(), pageable);
         return PageResponseMapper.toPageResponse(page, mapper::toDto);
     }
 

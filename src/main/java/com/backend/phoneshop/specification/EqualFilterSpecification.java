@@ -10,26 +10,31 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
-public class SearchNameSpecification<T> implements Specification<T> {
+public class EqualFilterSpecification<T> implements Specification<T> {
 
-    private String search;
+    private Map<String, Object> filters;
+    private List<String> fields;
 
     @Override
     public Predicate toPredicate(Root<T> root,
                                  CriteriaQuery<?> query,
                                  CriteriaBuilder cb) {
-        List<Predicate> predicates = new ArrayList<>();
-        if (search != null && !search.isBlank()) {
-            predicates.add(
-                    cb.like(
-                            cb.lower(root.get("name")),
-                            "%" + search.toLowerCase() + "%"
-                    )
-            );
+
+        if (filters == null || fields == null || fields.isEmpty()) {
+            return cb.conjunction();
         }
+
+        List<Predicate> predicates =  new ArrayList<>();
+        for (String field: fields){
+            if (filters.containsKey(field)) {
+                predicates.add(cb.equal(root.get(field), filters.get(field)));
+            }
+        }
+
         return cb.and(predicates.toArray(Predicate[]::new));
     }
 }
