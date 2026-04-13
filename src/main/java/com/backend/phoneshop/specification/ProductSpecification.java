@@ -2,13 +2,17 @@ package com.backend.phoneshop.specification;
 
 import com.backend.phoneshop.dto.RelationshipFilter;
 import com.backend.phoneshop.entity.Category;
+import com.backend.phoneshop.entity.Product;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +21,12 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategorySpecification implements Specification<Category> {
+public class ProductSpecification implements Specification<Product> {
 
     private Map<String, Object> filters;
 
     @Override
-    public Predicate toPredicate(Root<Category> root,
+    public Predicate toPredicate(Root<Product> root,
                                  CriteriaQuery<?> query,
                                  CriteriaBuilder cb) {
 
@@ -30,7 +34,7 @@ public class CategorySpecification implements Specification<Category> {
 
         if (filters != null) {
 
-            Predicate searchPredicate = SearchFilterSpecification.<Category>builder()
+            Predicate searchPredicate = SearchFilterSpecification.<Product>builder()
                     .filters(filters)
                     .fields(List.of("name"))
                     .build()
@@ -38,11 +42,18 @@ public class CategorySpecification implements Specification<Category> {
 
             predicates.add(searchPredicate);
 
-            Predicate relationshipPredicate = RelationshipFilterSpecification.<Category>builder()
+            Predicate equalPredicate = EqualFilterSpecification.<Product>builder()
+                    .filters(filters)
+                    .fields(List.of("color", "usedStatus", "spec"))
+                    .build()
+                    .toPredicate(root, query, cb);
+
+            predicates.add(equalPredicate);
+
+            Predicate relationshipPredicate = RelationshipFilterSpecification.<Product>builder()
                     .filters(filters)
                     .fields(Map.of(
-                            "brandId", RelationshipFilter.builder().entityKey("brand").build(),
-                            "categoryTypeId",  RelationshipFilter.builder().entityKey("categoryType").build()
+                                    "categoryId", RelationshipFilter.builder().entityKey("category").build()
                             )
                     )
                     .build()

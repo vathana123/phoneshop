@@ -3,10 +3,12 @@ package com.backend.phoneshop.mapper;
 import com.backend.phoneshop.dto.CategoryDto;
 import com.backend.phoneshop.entity.Category;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 
+    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
     @Mapping(source = "brand.id", target = "brandId")
     @Mapping(source = "brand.name", target = "brandName")
     @Mapping(source = "categoryType.id", target = "categoryTypeId")
