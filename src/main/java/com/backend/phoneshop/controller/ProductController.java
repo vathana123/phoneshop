@@ -1,7 +1,11 @@
 package com.backend.phoneshop.controller;
 
 import com.backend.phoneshop.dto.ProductDto;
+import com.backend.phoneshop.dto.ProductImportDto;
 import com.backend.phoneshop.service.ProductService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,5 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController extends BaseController<ProductService, ProductDto, Long>{
     public ProductController(ProductService service) {
         super(service, "Product");
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<?> importProduct(@RequestBody ProductImportDto dto) {
+        return ResponseEntity.ok(service.importProduct(dto));
     }
 }

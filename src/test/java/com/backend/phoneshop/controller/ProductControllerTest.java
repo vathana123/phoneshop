@@ -2,6 +2,7 @@ package com.backend.phoneshop.controller;
 
 import com.backend.phoneshop.dto.PageResponse;
 import com.backend.phoneshop.dto.ProductDto;
+import com.backend.phoneshop.dto.ProductImportDto;
 import com.backend.phoneshop.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.any;
@@ -137,5 +139,37 @@ class ProductControllerTest {
         mockMvc.perform(delete("/products/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Product 1 has been deleted."));
+    }
+
+    @Test
+    void shouldImportProduct() throws Exception {
+        // Arrange
+        ProductImportDto importDto = ProductImportDto.builder()
+                .id(1L)
+                .importDate(new Date())
+                .importUnit(10)
+                .unitPrice(new BigDecimal("500.00"))
+                .productId(1L)
+                .build();
+
+        ProductImportDto responseDto = ProductImportDto.builder()
+                .id(1L)
+                .importDate(importDto.importDate())
+                .importUnit(10)
+                .unitPrice(new BigDecimal("500.00"))
+                .productId(1L)
+                .build();
+
+        when(service.importProduct(any(ProductImportDto.class)))
+                .thenReturn(responseDto);
+
+        // Act + Assert
+        mockMvc.perform(post("/products/import")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(importDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.importUnit").value(10))
+                .andExpect(jsonPath("$.productId").value(1L));
     }
 }
