@@ -2,12 +2,16 @@ package com.backend.phoneshop.service;
 
 import com.backend.phoneshop.dto.PageResponse;
 import com.backend.phoneshop.dto.ProductDto;
+import com.backend.phoneshop.dto.ProductImportDto;
 import com.backend.phoneshop.entity.Category;
 import com.backend.phoneshop.entity.Product;
+import com.backend.phoneshop.entity.ProductImport;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.impl.ProductServiceImpl;
+import com.backend.phoneshop.mapper.ProductImportMapper;
 import com.backend.phoneshop.mapper.ProductMapper;
 import com.backend.phoneshop.repository.CategoryRepository;
+import com.backend.phoneshop.repository.ProductImportRepository;
 import com.backend.phoneshop.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,6 +45,12 @@ class ProductServiceTest {
 
     @Mock
     private ProductMapper mapper;
+
+    @Mock
+    private ProductImportRepository productImportRepository;
+
+    @Mock
+    private ProductImportMapper productImportMapper;
 
     @InjectMocks
     private ProductServiceImpl service;
@@ -155,5 +165,48 @@ class ProductServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.content().size());
+    }
+
+    @Test
+    void shouldImportProductAndUpdateAvailableUnit() {
+        // Arrange
+        Long productId = 1L;
+
+        ProductImportDto dto = ProductImportDto.builder()
+                .id(1L)
+                .importUnit(10)
+                .unitPrice(new BigDecimal("500.00"))
+                .productId(productId)
+                .build();
+
+        Product product = new Product();
+        product.setId(productId);
+        product.setAvailableUnit(5); // existing stock
+
+        ProductImport entity = new ProductImport();
+        ProductImport savedEntity = new ProductImport();
+
+        ProductImportDto expectedDto = ProductImportDto.builder()
+                .id(1L)
+                .importUnit(10)
+                .productId(productId)
+                .build();
+
+        when(repository.findById(productId)).thenReturn(Optional.of(product));
+        when(repository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        when(productImportMapper.toEntity(dto)).thenReturn(entity);
+        when(productImportRepository.save(entity)).thenReturn(savedEntity);
+        when(productImportMapper.toDto(savedEntity)).thenReturn(expectedDto);
+
+        // Act
+        ProductImportDto result = service.importProduct(dto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(15, product.getAvailableUnit()); // ✅ 5 + 10 = 15
+
+        verify(repository).save(product); // ensure product updated
+        verify(productImportRepository).save(entity); // ensure import saved
     }
 }
