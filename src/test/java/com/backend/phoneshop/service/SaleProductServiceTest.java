@@ -1,4 +1,4 @@
-package com.backend.phoneshop.impl;
+package com.backend.phoneshop.service;
 
 import com.backend.phoneshop.dto.SaleDetailDto;
 import com.backend.phoneshop.dto.SaleProductDto;
@@ -7,6 +7,7 @@ import com.backend.phoneshop.entity.SaleDetail;
 import com.backend.phoneshop.entity.SaleProduct;
 import com.backend.phoneshop.exception.ApiException;
 import com.backend.phoneshop.exception.ValidationException;
+import com.backend.phoneshop.impl.SaleProductServiceImpl;
 import com.backend.phoneshop.mapper.SaleDetailMapper;
 import com.backend.phoneshop.mapper.SaleProductMapper;
 import com.backend.phoneshop.repository.ProductRepository;
@@ -34,7 +35,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SaleProductServiceImplTest {
+class SaleProductServiceTest {
 
     @Mock
     private SaleProductRepository repository;
