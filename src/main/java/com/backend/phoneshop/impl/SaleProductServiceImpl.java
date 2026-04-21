@@ -76,8 +76,6 @@ public class SaleProductServiceImpl implements SaleProductService {
         validateSaleDetails(dto.saleDetails());
 
         SaleProduct saleProduct = mapper.toEntity(dto);
-        saleProduct.setDiscount(resolveDiscount(dto.discount()));
-        saleProduct.setPaidAmount(dto.paidAmount());
         saleProduct.setSoldAt(LocalDateTime.now());
 
         List<SaleDetail> saleDetails = dto.saleDetails()
