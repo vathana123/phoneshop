@@ -9,8 +9,7 @@ public class PageResponseMapper {
 
     public static <T, D> PageResponse<D> toPageResponse(Page<T> page, Function<T, D> mapper) {
         return new PageResponse<>(
-                page.getContent()
-                        .stream()
+                page.get()
                         .map(mapper)
                         .toList(),
                 page.getNumber(),

@@ -1,6 +1,7 @@
 package com.backend.phoneshop.controller;
 
 import com.backend.phoneshop.service.BaseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public abstract class BaseController<S extends BaseService<D, ID>, D, ID> {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody D dto) {
+    public ResponseEntity<?> save(@RequestBody @Valid D dto) {
         return ResponseEntity.ok(service.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable ID id, @RequestBody D dto) {
+    public ResponseEntity<?> update(@PathVariable ID id, @RequestBody @Valid D dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
