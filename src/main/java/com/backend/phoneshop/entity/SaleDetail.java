@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE sale_details SET canceled_at = NOW() WHERE id = ?")
 @Table(name = "sale_details")
 public class SaleDetail {
 
@@ -39,4 +41,7 @@ public class SaleDetail {
 
     @Column(name = "discount")
     private Double discount;
+
+    @Column(name = "canceled_at")
+    private LocalDateTime canceledAt;
 }

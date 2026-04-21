@@ -36,8 +36,6 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class SaleProductServiceImpl implements SaleProductService {
 
-    private static final String UPDATE_NOT_ALLOWED_MESSAGE = "Updating sale products is not supported.";
-
     private final SaleProductRepository repository;
     private final SaleDetailRepository saleDetailRepository;
     private final ProductRepository productRepository;
@@ -104,14 +102,11 @@ public class SaleProductServiceImpl implements SaleProductService {
     }
 
     @Override
-    public SaleProductDto update(Long id, SaleProductDto dto) {
-        throw new ApiException(HttpStatus.METHOD_NOT_ALLOWED, UPDATE_NOT_ALLOWED_MESSAGE);
-    }
-
-    @Override
     @Transactional
-    public void delete(Long id) {
-        repository.delete(findSaleProduct(id));
+    public void cancel(Long id) {
+        SaleProduct saleProduct = findSaleProduct(id);
+        increaseStockOrThrow(saleDetailRepository.findBySaleProductId(saleProduct.getId()));
+        repository.delete(saleProduct);
     }
 
     private SaleProduct findSaleProduct(Long id) {
@@ -141,6 +136,22 @@ public class SaleProductServiceImpl implements SaleProductService {
     private void decreaseStockOrThrow(List<SaleDetail> saleDetails) {
         for (SaleDetail saleDetail : saleDetails) {
             int updated = productRepository.decreaseStock(
+                    saleDetail.getProduct().getId(),
+                    saleDetail.getQuantity()
+            );
+
+            if (updated == 0) {
+                throw new ApiException(
+                        HttpStatus.BAD_REQUEST,
+                        "Product '%s' has insufficient stock.".formatted(saleDetail.getProduct().getName())
+                );
+            }
+        }
+    }
+
+    private void increaseStockOrThrow(List<SaleDetail> saleDetails) {
+        for (SaleDetail saleDetail : saleDetails) {
+            int updated = productRepository.increaseStock(
                     saleDetail.getProduct().getId(),
                     saleDetail.getQuantity()
             );

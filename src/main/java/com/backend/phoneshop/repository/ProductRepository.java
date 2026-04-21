@@ -11,6 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT p FROM Product p WHERE p.id = :id")
     Optional<Product> findByIdForUpdate(@Param("id") Long id);
+
     @Modifying
     @Query("""
     UPDATE Product p
@@ -18,4 +19,12 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     WHERE p.id = :id AND p.availableUnit >= :qty
 """)
     int decreaseStock(@Param("id") Long id, @Param("qty") int qty);
+
+    @Modifying
+    @Query("""
+    UPDATE Product p
+    SET p.availableUnit = p.availableUnit + :qty
+    WHERE p.id = :id
+""")
+    int increaseStock(@Param("id") Long id, @Param("qty") int qty);
 }

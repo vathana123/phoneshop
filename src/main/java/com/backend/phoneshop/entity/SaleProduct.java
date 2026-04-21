@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,8 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE sale_products SET deleted_at = NOW() WHERE id = ?")
-@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE sale_products SET canceled_at = NOW() WHERE id = ?")
 @Table(name = "sale_products")
 public class SaleProduct {
 
@@ -53,8 +51,8 @@ public class SaleProduct {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
+    @Column(name = "canceled_at")
+    private LocalDateTime canceledAt;
 
     @OneToMany(
             mappedBy = "saleProduct",

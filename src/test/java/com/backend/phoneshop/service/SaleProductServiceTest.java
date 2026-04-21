@@ -172,7 +172,7 @@ class SaleProductServiceTest {
     void update_shouldThrowMethodNotAllowedException() {
         SaleProductDto request = saleProductDto(List.of(saleDetailDto(1L, 1, "100.00", 0.0)), "100.00", 0.0);
 
-        assertThatThrownBy(() -> service.update(1L, request))
+        assertThatThrownBy(() -> service.cancel(1L))
                 .isInstanceOf(ApiException.class)
                 .satisfies(throwable -> {
                     ApiException exception = (ApiException) throwable;
@@ -188,7 +188,7 @@ class SaleProductServiceTest {
         SaleProduct saleProduct = SaleProduct.builder().id(9L).build();
         when(repository.findById(9L)).thenReturn(Optional.of(saleProduct));
 
-        service.delete(9L);
+        service.cancel(9L);
 
         verify(repository).delete(saleProduct);
     }
