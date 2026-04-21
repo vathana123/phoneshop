@@ -3,6 +3,7 @@ package com.backend.phoneshop.controller;
 import com.backend.phoneshop.dto.ProductDto;
 import com.backend.phoneshop.dto.ProductImportDto;
 import com.backend.phoneshop.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class ProductController extends BaseController<ProductService, ProductDto
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importProduct(@RequestBody ProductImportDto dto) {
+    public ResponseEntity<?> importProduct(@RequestBody @Valid ProductImportDto dto) {
         return ResponseEntity.ok(service.importProduct(dto));
     }
 }
