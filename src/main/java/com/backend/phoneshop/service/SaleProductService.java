@@ -1,7 +1,7 @@
 package com.backend.phoneshop.service;
 
-import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.dto.SaleProductDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
+import com.backend.phoneshop.dto.data.SaleProductDto;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Map;

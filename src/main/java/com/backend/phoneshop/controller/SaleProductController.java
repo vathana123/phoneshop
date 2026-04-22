@@ -1,12 +1,10 @@
 package com.backend.phoneshop.controller;
 
-import com.backend.phoneshop.dto.SaleProductDto;
-import com.backend.phoneshop.exception.ApiException;
+import com.backend.phoneshop.dto.data.SaleProductDto;
 import com.backend.phoneshop.service.SaleProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

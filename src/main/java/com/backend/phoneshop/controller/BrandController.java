@@ -1,13 +1,8 @@
 package com.backend.phoneshop.controller;
 
-import com.backend.phoneshop.dto.BrandDto;
+import com.backend.phoneshop.dto.data.BrandDto;
 import com.backend.phoneshop.service.BrandService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("brands")

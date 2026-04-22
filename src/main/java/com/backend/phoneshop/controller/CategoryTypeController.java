@@ -1,6 +1,6 @@
 package com.backend.phoneshop.controller;
 
-import com.backend.phoneshop.dto.CategoryTypeDto;
+import com.backend.phoneshop.dto.data.CategoryTypeDto;
 import com.backend.phoneshop.service.CategoryTypeService;
 import org.springframework.web.bind.annotation.*;
 

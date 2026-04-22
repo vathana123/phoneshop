@@ -1,6 +1,6 @@
 package com.backend.phoneshop.specification;
 
-import com.backend.phoneshop.dto.RelationshipFilter;
+import com.backend.phoneshop.dto.request.RelationshipFilter;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

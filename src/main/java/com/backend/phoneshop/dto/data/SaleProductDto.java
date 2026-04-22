@@ -1,4 +1,4 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.data;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;

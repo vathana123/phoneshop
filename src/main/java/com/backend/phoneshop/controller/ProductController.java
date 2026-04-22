@@ -1,7 +1,7 @@
 package com.backend.phoneshop.controller;
 
-import com.backend.phoneshop.dto.ProductDto;
-import com.backend.phoneshop.dto.ProductImportDto;
+import com.backend.phoneshop.dto.data.ProductDto;
+import com.backend.phoneshop.dto.data.ProductImportDto;
 import com.backend.phoneshop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

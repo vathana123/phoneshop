@@ -1,6 +1,6 @@
 package com.backend.phoneshop.service;
 
-import com.backend.phoneshop.dto.PageResponse;
+import com.backend.phoneshop.dto.respone.PageResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Map;

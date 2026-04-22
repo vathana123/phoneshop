@@ -1,11 +1,11 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.data;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record CategoryTypeDto(
+public record BrandDto (
     Long id,
     @NotBlank(message = "Name is required")
     String name
-) {}
+){}

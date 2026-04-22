@@ -1,10 +1,6 @@
 package com.backend.phoneshop.service;
 
-import com.backend.phoneshop.dto.CategoryDto;
-import com.backend.phoneshop.dto.PageResponse;
-import org.springframework.data.domain.Pageable;
-
-import java.util.Map;
+import com.backend.phoneshop.dto.data.CategoryDto;
 
 public interface CategoryService extends BaseService<CategoryDto, Long> {
 }

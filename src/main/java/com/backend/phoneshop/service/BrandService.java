@@ -1,10 +1,6 @@
 package com.backend.phoneshop.service;
 
-import com.backend.phoneshop.dto.BrandDto;
-import com.backend.phoneshop.dto.PageResponse;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
+import com.backend.phoneshop.dto.data.BrandDto;
 
 public interface BrandService extends BaseService<BrandDto, Long>{
 }

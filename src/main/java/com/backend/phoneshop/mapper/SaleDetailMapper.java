@@ -1,15 +1,11 @@
 package com.backend.phoneshop.mapper;
 
-import com.backend.phoneshop.dto.SaleDetailDto;
+import com.backend.phoneshop.dto.data.SaleDetailDto;
 import com.backend.phoneshop.entity.SaleDetail;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface SaleDetailMapper {
-
-    SaleDetailMapper INSTANCE = Mappers.getMapper(SaleDetailMapper.class);
-
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "product.name", target = "productName")
     @Mapping(source = "saleProduct.id", target = "saleProductId")

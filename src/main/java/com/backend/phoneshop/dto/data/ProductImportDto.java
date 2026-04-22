@@ -1,4 +1,4 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.data;
 
 import jakarta.validation.constraints.*;
 import lombok.Builder;
@@ -18,6 +18,6 @@ public record ProductImportDto(
         @DecimalMin(value = "0", message = "Unit price must be greater than 0")
         @NotNull(message = "Unit price is required")
         BigDecimal unitPrice,
-        @NotBlank(message = "Product ID is required")
+        @NotNull(message = "Product ID is required")
         Long productId
 ) {}

@@ -1,8 +1,8 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.dto.SaleDetailDto;
-import com.backend.phoneshop.dto.SaleProductDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
+import com.backend.phoneshop.dto.data.SaleDetailDto;
+import com.backend.phoneshop.dto.data.SaleProductDto;
 import com.backend.phoneshop.entity.Product;
 import com.backend.phoneshop.entity.SaleDetail;
 import com.backend.phoneshop.entity.SaleProduct;

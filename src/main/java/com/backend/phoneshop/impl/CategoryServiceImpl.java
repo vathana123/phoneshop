@@ -1,7 +1,7 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.CategoryDto;
-import com.backend.phoneshop.dto.PageResponse;
+import com.backend.phoneshop.dto.data.CategoryDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
 import com.backend.phoneshop.entity.Brand;
 import com.backend.phoneshop.entity.Category;
 import com.backend.phoneshop.entity.CategoryType;
@@ -17,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     private final BrandRepository brandRepository;

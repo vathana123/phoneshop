@@ -1,4 +1,4 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.respone;
 
 import lombok.Builder;
 

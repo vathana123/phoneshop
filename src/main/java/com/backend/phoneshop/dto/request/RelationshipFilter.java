@@ -1,4 +1,4 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.request;
 
 import lombok.Builder;
 

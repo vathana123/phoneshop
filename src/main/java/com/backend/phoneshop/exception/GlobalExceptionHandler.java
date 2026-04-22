@@ -1,7 +1,7 @@
 package com.backend.phoneshop.exception;
 
-import com.backend.phoneshop.dto.ResourceNotFoundResponse;
-import com.backend.phoneshop.dto.ValidationResponse;
+import com.backend.phoneshop.dto.respone.ResourceNotFoundResponse;
+import com.backend.phoneshop.dto.respone.ValidationResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

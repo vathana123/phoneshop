@@ -1,4 +1,4 @@
-package com.backend.phoneshop.dto;
+package com.backend.phoneshop.dto.data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
