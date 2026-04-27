@@ -1,13 +1,47 @@
 package com.backend.phoneshop.controller;
 
-import com.backend.phoneshop.dto.CategoryTypeDto;
+import com.backend.phoneshop.dto.data.CategoryTypeDto;
 import com.backend.phoneshop.service.CategoryTypeService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("category_types")
-public class CategoryTypeController extends BaseController<CategoryTypeService, CategoryTypeDto, Long>{
-    public CategoryTypeController(CategoryTypeService service) {
-        super(service, "Category Type");
+public class CategoryTypeController {
+    private final CategoryTypeService service;
+
+    @GetMapping
+    public ResponseEntity<?> getAll(
+            @RequestParam(required = false) Map<String, Object> filters,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.findAll(filters, pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody @Valid CategoryTypeDto dto) {
+        return ResponseEntity.ok(service.save(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryTypeDto dto) {
+        return ResponseEntity.ok(service.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Category Type %s has been deleted.".formatted(id));
     }
 }

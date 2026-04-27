@@ -1,8 +1,8 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.ProductDto;
-import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.dto.ProductImportDto;
+import com.backend.phoneshop.dto.data.ProductDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
+import com.backend.phoneshop.dto.data.ProductImportDto;
 import com.backend.phoneshop.entity.Category;
 import com.backend.phoneshop.entity.Product;
 import com.backend.phoneshop.entity.ProductImport;
@@ -15,16 +15,17 @@ import com.backend.phoneshop.repository.ProductImportRepository;
 import com.backend.phoneshop.repository.ProductRepository;
 import com.backend.phoneshop.service.ProductService;
 import com.backend.phoneshop.specification.ProductSpecification;
-import com.backend.phoneshop.specification.SearchFilterSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;

@@ -1,7 +1,7 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.CategoryTypeDto;
-import com.backend.phoneshop.dto.PageResponse;
+import com.backend.phoneshop.dto.data.CategoryTypeDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
 import com.backend.phoneshop.entity.CategoryType;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.mapper.CategoryTypeMapper;
@@ -13,10 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class CategoryTypeServiceImpl implements CategoryTypeService {

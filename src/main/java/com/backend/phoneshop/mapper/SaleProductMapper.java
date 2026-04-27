@@ -1,15 +1,11 @@
 package com.backend.phoneshop.mapper;
 
-import com.backend.phoneshop.dto.SaleProductDto;
+import com.backend.phoneshop.dto.data.SaleProductDto;
 import com.backend.phoneshop.entity.SaleProduct;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = SaleDetailMapper.class)
 public interface SaleProductMapper {
-
-    SaleProductMapper INSTANCE = Mappers.getMapper(SaleProductMapper.class);
-
     SaleProductDto toDto(SaleProduct entity);
 
     @Mapping(target = "id", ignore = true)
@@ -17,7 +13,7 @@ public interface SaleProductMapper {
     @Mapping(target = "soldAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "deletedAt", ignore = true)
+    @Mapping(target = "canceledAt", ignore = true)
     SaleProduct toEntity(SaleProductDto dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -26,6 +22,6 @@ public interface SaleProductMapper {
     @Mapping(target = "soldAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "deletedAt", ignore = true)
+    @Mapping(target = "canceledAt", ignore = true)
     SaleProduct mergeDto(SaleProductDto dto, @MappingTarget SaleProduct entity);
 }

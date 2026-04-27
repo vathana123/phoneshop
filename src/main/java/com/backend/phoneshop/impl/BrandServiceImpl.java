@@ -1,7 +1,7 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.BrandDto;
-import com.backend.phoneshop.dto.PageResponse;
+import com.backend.phoneshop.dto.data.BrandDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
 import com.backend.phoneshop.entity.Brand;
 import com.backend.phoneshop.exception.ResourceNotFoundException;
 import com.backend.phoneshop.mapper.BrandMapper;
@@ -13,12 +13,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BrandServiceImpl implements BrandService {
     private final BrandRepository repository;
     private final BrandMapper mapper;

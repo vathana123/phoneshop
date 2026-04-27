@@ -1,8 +1,8 @@
 package com.backend.phoneshop.impl;
 
-import com.backend.phoneshop.dto.PageResponse;
-import com.backend.phoneshop.dto.SaleDetailDto;
-import com.backend.phoneshop.dto.SaleProductDto;
+import com.backend.phoneshop.dto.respone.PageResponse;
+import com.backend.phoneshop.dto.data.SaleDetailDto;
+import com.backend.phoneshop.dto.data.SaleProductDto;
 import com.backend.phoneshop.entity.Product;
 import com.backend.phoneshop.entity.SaleDetail;
 import com.backend.phoneshop.entity.SaleProduct;
@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class SaleProductServiceImpl implements SaleProductService {
-
-    private static final String UPDATE_NOT_ALLOWED_MESSAGE = "Updating sale products is not supported.";
 
     private final SaleProductRepository repository;
     private final SaleDetailRepository saleDetailRepository;
@@ -76,8 +74,6 @@ public class SaleProductServiceImpl implements SaleProductService {
         validateSaleDetails(dto.saleDetails());
 
         SaleProduct saleProduct = mapper.toEntity(dto);
-        saleProduct.setDiscount(resolveDiscount(dto.discount()));
-        saleProduct.setPaidAmount(dto.paidAmount());
         saleProduct.setSoldAt(LocalDateTime.now());
 
         List<SaleDetail> saleDetails = dto.saleDetails()
@@ -106,14 +102,11 @@ public class SaleProductServiceImpl implements SaleProductService {
     }
 
     @Override
-    public SaleProductDto update(Long id, SaleProductDto dto) {
-        throw new ApiException(HttpStatus.METHOD_NOT_ALLOWED, UPDATE_NOT_ALLOWED_MESSAGE);
-    }
-
-    @Override
     @Transactional
-    public void delete(Long id) {
-        repository.delete(findSaleProduct(id));
+    public void cancel(Long id) {
+        SaleProduct saleProduct = findSaleProduct(id);
+        increaseStockOrThrow(saleDetailRepository.findBySaleProductId(saleProduct.getId()));
+        repository.delete(saleProduct);
     }
 
     private SaleProduct findSaleProduct(Long id) {
@@ -143,6 +136,22 @@ public class SaleProductServiceImpl implements SaleProductService {
     private void decreaseStockOrThrow(List<SaleDetail> saleDetails) {
         for (SaleDetail saleDetail : saleDetails) {
             int updated = productRepository.decreaseStock(
+                    saleDetail.getProduct().getId(),
+                    saleDetail.getQuantity()
+            );
+
+            if (updated == 0) {
+                throw new ApiException(
+                        HttpStatus.BAD_REQUEST,
+                        "Product '%s' has insufficient stock.".formatted(saleDetail.getProduct().getName())
+                );
+            }
+        }
+    }
+
+    private void increaseStockOrThrow(List<SaleDetail> saleDetails) {
+        for (SaleDetail saleDetail : saleDetails) {
+            int updated = productRepository.increaseStock(
                     saleDetail.getProduct().getId(),
                     saleDetail.getQuantity()
             );
