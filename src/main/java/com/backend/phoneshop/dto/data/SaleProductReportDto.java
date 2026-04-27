@@ -3,7 +3,7 @@ package com.backend.phoneshop.dto.data;
 import lombok.Builder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Builder
 public record SaleProductReportDto(
@@ -12,7 +12,7 @@ public record SaleProductReportDto(
         String categoryName,
         String brandName,
         String categoryTypeName,
-        LocalDateTime soldAt,
+        Timestamp soldAt,
         Integer quantity,
         BigDecimal saleAmount,
         Double discount

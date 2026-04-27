@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Repository
 public interface SaleProductReportRepository
@@ -60,8 +60,8 @@ public interface SaleProductReportRepository
             nativeQuery = true
     )
     Page<SaleProductReport> getSaleProductReport(
-            @Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
             Pageable pageable
     );
 
@@ -81,8 +81,8 @@ public interface SaleProductReportRepository
             ct.id AS categoryTypeId,
             ct.name AS categoryTypeName,
             SUM(sd.quantity) AS soleProductCount,
-            SUM(sd.sale_amount * sd.quantity) AS totalPaymentAmount,
-            SUM(DISTINCT sp.paid_amount) AS totalPaidAmount
+            CAST(SUM(sd.sale_amount * sd.quantity) AS DECIMAL(18,2)) AS totalPaymentAmount,
+            CAST(SUM(DISTINCT sp.paid_amount) AS DECIMAL(18,2)) AS totalPaidAmount
         FROM sale_details sd
         JOIN sale_products sp ON sp.id = sd.sale_product_id
         JOIN products p ON p.id = sd.product_id
@@ -128,8 +128,8 @@ public interface SaleProductReportRepository
             nativeQuery = true
     )
     Page<SaleProductMonthlyReport> getMonthlyReport(
-            @Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
             Pageable pageable
     );
 }

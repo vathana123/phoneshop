@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,8 +19,8 @@ public class ExpenseMonthlyReportController {
 
     @GetMapping
     public ResponseEntity<?> getExpenseReport(
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
             Pageable pageable) {
         return ResponseEntity.ok(service.getExpenseReport(startDate, endDate, pageable));
     }

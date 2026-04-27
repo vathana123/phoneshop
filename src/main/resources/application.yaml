@@ -4,6 +4,9 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
 
   jpa:
     hibernate:
@@ -15,3 +18,11 @@ spring:
 
   jackson:
     time-zone: Asia/Phnom_Penh
+
+jwt:
+  rsa-private-key: classpath:private.pem
+  rsa-public-key: classpath:public.pem
+
+logging:
+  level:
+    "[org.springframework.security]": trace

@@ -13,7 +13,7 @@ public record ExpenseMonthlyReport(
         String brandName,
         Long categoryTypeId,
         String categoryTypeName,
-        Integer importProductCount,
+        BigDecimal importProductCount,
         BigDecimal totalExpenseAmount,
-        Integer importCount
+        Long importCount
 ) {}

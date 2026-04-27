@@ -14,11 +14,13 @@ public interface SaleDetailMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "product", ignore = true)
     @Mapping(target = "saleProduct", ignore = true)
+    @Mapping(target = "canceledAt", ignore = true)
     SaleDetail toEntity(SaleDetailDto dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "product", ignore = true)
     @Mapping(target = "saleProduct", ignore = true)
+    @Mapping(target = "canceledAt", ignore = true)
     SaleDetail mergeDto(SaleDetailDto dto, @MappingTarget SaleDetail entity);
 }

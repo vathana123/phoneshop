@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,15 +18,16 @@ public class SaleProductReportController {
     private final SaleProductReportService service;
     @GetMapping
     public ResponseEntity<?> getSaleProductReport(
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
             Pageable pageable) {
         return ResponseEntity.ok(service.getSaleProductReport(startDate, endDate, pageable));
     }
+
     @GetMapping("/monthly")
     public ResponseEntity<?> getSaleProductMonthlyReport(
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
             Pageable pageable) {
         return ResponseEntity.ok(service.getSaleProductMonthlyReport(startDate, endDate, pageable));
     }

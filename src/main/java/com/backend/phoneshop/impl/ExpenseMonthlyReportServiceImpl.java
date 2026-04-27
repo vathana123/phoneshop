@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -21,7 +21,7 @@ public class ExpenseMonthlyReportServiceImpl implements ExpenseMonthlyReportServ
     private final ExpenseMonthlyReportMapper mapper;
 
     @Override
-    public PageResponse<ExpenseMonthlyReportDto> getExpenseReport(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+    public PageResponse<ExpenseMonthlyReportDto> getExpenseReport(LocalDate startDate, LocalDate endDate, Pageable pageable) {
         return PageResponseMapper.toPageResponse(repository.getExpenseMonthlyReport(startDate, endDate, pageable), mapper::toExpenseMonthlyDto);
     }
 }

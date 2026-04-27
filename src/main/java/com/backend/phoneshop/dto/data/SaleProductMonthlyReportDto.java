@@ -12,7 +12,7 @@ public record SaleProductMonthlyReportDto(
         String categoryName,
         String brandName,
         String categoryTypeName,
-        Integer importProductCount,
-        BigDecimal totalExpenseAmount,
-        Integer importCount // Count time that we import this product in month(s)
+        BigDecimal soleProductCount, // sum of quantity of sold product per month
+        BigDecimal totalPaymentAmount, // sum of paymentAmount per month
+        BigDecimal totalPaidAmount // sum of paidAmount per month
 ) {}

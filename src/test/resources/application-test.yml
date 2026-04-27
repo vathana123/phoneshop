@@ -12,3 +12,11 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+
+jwt:
+  rsa-private-key: classpath:private.pem
+  rsa-public-key: classpath:public.pem
+
+logging:
+  level:
+    "[org.springframework.security]": trace
