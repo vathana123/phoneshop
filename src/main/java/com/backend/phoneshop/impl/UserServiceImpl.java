@@ -17,7 +17,7 @@ import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final RoleRepository roleRepository;
     private final UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public PageResponse<UserDto> findAll(Map<String, Object> filters, Pageable pageable) {
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("This username is already taken!. Please try other username.");
         }
         User user = mapper.toEntity(dto);
-        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+        user.setPassword(passwordEncoder.encode("123456"));
         if (dto.roles() != null) {
             user.setRoles(dto.roles().stream().map(this::getRole).collect(Collectors.toSet()));
         }
