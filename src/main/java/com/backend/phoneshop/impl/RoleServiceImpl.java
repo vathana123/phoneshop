@@ -43,7 +43,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto findById(Long id) {
         return mapper
-                .toDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException(Product.class, id)));
+                .toDto(repository.findById(id).orElseThrow(()->new ResourceNotFoundException(Role.class, id)));
     }
 
     @Override
