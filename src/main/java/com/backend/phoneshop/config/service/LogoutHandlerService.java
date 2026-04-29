@@ -66,7 +66,7 @@ public class LogoutHandlerService implements LogoutHandler {
                     refreshToken.getUser().getUsername());
 
         } catch (JwtException ex) {
-            log.error("Invalid JWT during logout: {}", ex.getMessage());
+            log.debug("Invalid JWT during logout: {}", ex.getMessage());
         }
     }
 }

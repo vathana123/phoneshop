@@ -80,7 +80,7 @@ public class JwtService {
                 .issuer(ISSUER)
                 .subject(userDetails.getUsername())
                 .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
+                .expiresAt(Instant.now().plus(15, ChronoUnit.MINUTES))
                 .claim(CLAIM_PERMISSIONS,
                         userDetails.getAuthorities()
                                 .stream()

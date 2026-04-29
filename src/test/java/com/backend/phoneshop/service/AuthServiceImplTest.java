@@ -22,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDateTime;
@@ -144,6 +145,22 @@ class AuthServiceImplTest {
                 () -> authService.refreshToken(token));
 
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
+    }
+
+    @Test
+    void shouldThrowException_whenRefreshJwtCannotBeDecoded() {
+        // Arrange
+        String token = "Bearer abc";
+
+        when(jwtDecoder.decode("abc"))
+                .thenThrow(new JwtException("Invalid token"));
+
+        // Act & Assert
+        ApiException ex = assertThrows(ApiException.class,
+                () -> authService.refreshToken(token));
+
+        assertEquals(HttpStatus.UNAUTHORIZED, ex.getStatus());
+        assertEquals("Invalid or expired refresh token", ex.getMessage());
     }
 
     @Test
