@@ -18,9 +18,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,7 +88,12 @@ public class AuthServiceImpl implements AuthService {
         String oldRefreshToken = authorizationHeader.substring(7);
 
         // 1. Decode JWT
-        Jwt jwt = jwtDecoder.decode(oldRefreshToken);
+        Jwt jwt;
+        try {
+            jwt = jwtDecoder.decode(oldRefreshToken);
+        } catch (JwtException ex) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid or expired refresh token");
+        }
 
         // 2. Validate token type
         String scope = jwt.getClaimAsString("scope");
@@ -126,10 +133,16 @@ public class AuthServiceImpl implements AuthService {
                                 new SimpleGrantedAuthority(permission.getName()))
                         .collect(Collectors.toSet());
 
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                username,
+                "",
+                authorities
+        );
+
         // create new authentication object
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
-                        username,
+                        userDetails,
                         null,
                         authorities
                 );

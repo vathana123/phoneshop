@@ -25,4 +25,5 @@ jwt:
 
 logging:
   level:
-    "[org.springframework.security]": trace
+    "[org.springframework.security]": warn
+    "[com.backend.phoneshop.config.security]": info
