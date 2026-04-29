@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class CategoryController {
     private final CategoryService service;
 
+    @PreAuthorize("hasAuthority('CATEGORY_READ')")
     @GetMapping
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) Map<String, Object> filters,
@@ -26,21 +28,25 @@ public class CategoryController {
         return ResponseEntity.ok(service.findAll(filters, pageable));
     }
 
+    @PreAuthorize("hasAuthority('CATEGORY_READ')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid CategoryDto dto) {
         return ResponseEntity.ok(service.save(dto));
     }
 
+    @PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
+    @PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
