@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class SaleProductController {
     private final SaleProductService service;
 
+    @PreAuthorize("hasAuthority('SALE_PRODUCT_READ')")
     @GetMapping
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) Map<String, Object> filters,
@@ -24,16 +26,19 @@ public class SaleProductController {
         return ResponseEntity.ok(service.findAll(filters, pageable));
     }
 
+    @PreAuthorize("hasAuthority('SALE_PRODUCT_READ')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PreAuthorize("hasAuthority('SALE_PRODUCT_CREATE')")
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid SaleProductDto dto) {
         return ResponseEntity.ok(service.save(dto));
     }
 
+    @PreAuthorize("hasAuthority('SALE_PRODUCT_DELETE')")
     @PutMapping("/{id}/cancel")
     public ResponseEntity<?> cancel(@PathVariable Long id) {
         service.cancel(id);
